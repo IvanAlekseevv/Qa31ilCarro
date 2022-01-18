@@ -9,9 +9,13 @@ public class RegistrationTests extends TestsBase {
 @Test
 public void registrationSuccess(){
     //open form registration
+    app.getUserHelper().openRegistrationForm();
     //fill form -----type()
+    app.getUserHelper().fillRegistrationForm("Doda","Dodik","doda@gmail.com","Dd12345$");
     //checkbox
+    app.getUserHelper().checkPolicy();
     //button register -----click()
+    app.getUserHelper().submitForm();
 
 }
 

@@ -8,12 +8,11 @@ public class LoginTests extends TestsBase{
 @Test
 public void loginSuccess(){
     //open form login
-    click(By.xpath("//a[text()=' Log in ']"));
+    app.getUserHelper().openLoginForm();
     //fill form -----type()
-    type(By.id("email"), "lenastep@gmail.com");
-    type(By.id("password"), "12345nnnN");
+    app.getUserHelper().fillLoginForm("lenastep@gmail.com", "12345nnnN");
     //button login -----click()
-    click(By.cssSelector("[type='submit']"));
+    app.getUserHelper().submitForm();
 }
 
 }
