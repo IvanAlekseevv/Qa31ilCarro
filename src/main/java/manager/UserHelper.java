@@ -2,8 +2,10 @@ package manager;
 
 import models.User;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -59,12 +61,28 @@ public class UserHelper extends HelperBase {
         }
     }
 
+    public void checkPolicyByXY() {
+        WebElement label = wd.findElement(By.xpath("//label[@for='terms-of-use']"));
+        Rectangle rect = label.getRect();
+
+        int offSetX = rect.getWidth() / 2;
+        int offSetY = rect.getHeight() / 2;
+
+        Actions actions = new Actions(wd);
+        actions.moveToElement(label).release().build().perform();
+
+        System.out.println(offSetX + " " + offSetY);
+        actions.moveByOffset(-offSetX, -offSetY).click().release().build().perform();
+
+
+    }
+
 
     public boolean isRegistrationSuccess() {
-        WebDriverWait waite = new WebDriverWait(wd,10);
-        waite.until(ExpectedConditions.visibilityOf(wd.findElement(By.cssSelector("dialog-container"))));
-        WebElement message = wd.findElement(By.cssSelector("h2.message"));
-        String text = message.getText();
+        WebElement until = new WebDriverWait(wd, 15)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='dialog-container']//h2")));
+        String text = until.getText();
+        System.out.println(text);
         return text.equals("You are logged in success");
 }
 
@@ -78,6 +96,21 @@ public class UserHelper extends HelperBase {
         }
 
     }
+
+    public boolean isLogOutPresent() {
+        return isElementPresent(By.xpath("//*[text()=' Logout ']"));
     }
+
+    public void logout() {
+        click(By.xpath("//*[text()=' Logout ']"));
+    }
+
+    public void clickOkButton() {
+        new WebDriverWait(wd, 10)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='dialog-container']")));
+        click(By.xpath("//*[text()='Ok']"));
+
+    }
+}
 
 

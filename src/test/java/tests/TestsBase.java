@@ -5,19 +5,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 public class TestsBase {
     protected static ApplicationManager app = new ApplicationManager();
 
-    @BeforeMethod
+    @BeforeSuite
     public void setUp(){
         app.init();
 
     }
 
-    @AfterMethod
+    @AfterSuite
     public void tearDown(){
        app.stop();
     }
